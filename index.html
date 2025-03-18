@@ -114,11 +114,16 @@
         // Function to extract video ID from YouTube URL
         function getYouTubeVideoId(url) {
             try {
-                const urlObj = new URL(url);
-                if (urlObj.hostname === 'youtu.be') {
-                    return urlObj.pathname.slice(1);
+                // Handle youtu.be URLs
+                if (url.includes('youtu.be/')) {
+                    return url.split('youtu.be/')[1].split('?')[0];
                 }
-                return urlObj.searchParams.get('v');
+                // Handle youtube.com URLs
+                if (url.includes('youtube.com/watch')) {
+                    const urlParams = new URLSearchParams(url.split('?')[1]);
+                    return urlParams.get('v');
+                }
+                return null;
             } catch (error) {
                 console.error('Error parsing URL:', error);
                 return null;
@@ -134,7 +139,7 @@
             if (!videoId) {
                 videoItem.innerHTML = `
                     <div class="error-message">
-                        Invalid video URL
+                        Invalid video URL: ${videoUrl}
                     </div>
                 `;
                 return videoItem;
