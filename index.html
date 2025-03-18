@@ -150,8 +150,14 @@
         }
 
         // Function to create video element
-        function createVideoElement(videoUrl) {
-            console.log('Creating video element for:', videoUrl);
+        function createVideoElement(videoData) {
+            console.log('Creating video element for:', videoData);
+            const videoUrl = typeof videoData === 'object' && videoData.url ? videoData.url : videoData;
+            const videoTitle = typeof videoData === 'object' && videoData.title ? videoData.title : '';
+            
+            console.log('Extracted URL:', videoUrl);
+            console.log('Extracted title:', videoTitle);
+            
             const videoId = getYouTubeVideoId(videoUrl);
             console.log('Got video ID:', videoId);
             
@@ -160,15 +166,15 @@
             
             if (!videoId) {
                 console.error('Invalid video URL object:', {
-                    url: videoUrl,
-                    type: typeof videoUrl,
-                    stringified: JSON.stringify(videoUrl)
+                    videoData,
+                    type: typeof videoData,
+                    stringified: JSON.stringify(videoData)
                 });
                 videoItem.innerHTML = `
                     <div class="error-message">
                         Invalid video URL. Debug info:<br>
-                        Type: ${typeof videoUrl}<br>
-                        Value: ${JSON.stringify(videoUrl)}
+                        Type: ${typeof videoData}<br>
+                        Value: ${JSON.stringify(videoData)}
                     </div>
                 `;
                 return videoItem;
@@ -177,10 +183,12 @@
             videoItem.innerHTML = `
                 <div class="video-container">
                     <iframe src="https://www.youtube-nocookie.com/embed/${videoId}"
+                            title="${videoTitle}"
                             frameborder="0"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowfullscreen></iframe>
                 </div>
+                ${videoTitle ? `<div class="video-title" style="padding: 1rem; text-align: center;">${videoTitle}</div>` : ''}
             `;
             return videoItem;
         }
@@ -203,9 +211,9 @@
                 videoGrid.innerHTML = '';
                 
                 // Add videos
-                data.videos.forEach((videoUrl, index) => {
-                    console.log(`Processing video ${index + 1}:`, videoUrl);
-                    videoGrid.appendChild(createVideoElement(videoUrl));
+                data.videos.forEach((videoData, index) => {
+                    console.log(`Processing video ${index + 1}:`, videoData);
+                    videoGrid.appendChild(createVideoElement(videoData));
                 });
             } catch (error) {
                 console.error('Error loading videos:', error);
