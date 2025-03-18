@@ -1,0 +1,30 @@
+{
+    "title": "Kid-Friendly Videos",
+    "subtitle": "A collection of family-friendly videos - built for Rey and Ari Zelig",
+    "videos": [
+        {
+            "url": "https://www.youtube.com/watch?v=0-Gyuj2UomI",
+            "customTitle": "Making Perfect Pizza at Home"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=VLMWq5nfvlk",
+            "customTitle": "Easy Pasta Recipe"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=e1b8aFeQ6CM",
+            "customTitle": "Simple Cooking Tips"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=pi6QU4kgRXA",
+            "customTitle": "Healthy Cooking Ideas"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=nPdl928XmFM",
+            "customTitle": "Fun Breakfast Recipes"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=zpTOtt9gOE8",
+            "customTitle": "Easy Dessert Making"
+        }
+    ]
+} 
