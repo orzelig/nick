@@ -114,36 +114,61 @@
     <script>
         // Function to extract video ID from YouTube URL
         function getYouTubeVideoId(url) {
+            console.log('Processing URL:', url);
+            console.log('URL type:', typeof url);
+            
             try {
                 // Ensure url is a string
                 const urlStr = String(url || '');
+                console.log('URL as string:', urlStr);
                 
                 // Handle youtu.be URLs
                 if (urlStr.includes('youtu.be/')) {
-                    return urlStr.split('youtu.be/')[1].split('?')[0];
+                    const id = urlStr.split('youtu.be/')[1].split('?')[0];
+                    console.log('Extracted ID (youtu.be):', id);
+                    return id;
                 }
                 // Handle youtube.com URLs
                 if (urlStr.includes('youtube.com/watch')) {
-                    const urlParams = new URLSearchParams(urlStr.split('?')[1]);
-                    return urlParams.get('v');
+                    const params = urlStr.split('?')[1];
+                    console.log('URL params:', params);
+                    const urlParams = new URLSearchParams(params);
+                    const id = urlParams.get('v');
+                    console.log('Extracted ID (youtube.com):', id);
+                    return id;
                 }
+                console.log('No video ID found in URL');
                 return null;
             } catch (error) {
                 console.error('Error parsing URL:', error);
+                console.error('Error details:', {
+                    message: error.message,
+                    stack: error.stack
+                });
                 return null;
             }
         }
 
         // Function to create video element
         function createVideoElement(videoUrl) {
+            console.log('Creating video element for:', videoUrl);
             const videoId = getYouTubeVideoId(videoUrl);
+            console.log('Got video ID:', videoId);
+            
             const videoItem = document.createElement('div');
             videoItem.className = 'video-item';
             
             if (!videoId) {
+                console.error('Invalid video URL object:', {
+                    url: videoUrl,
+                    type: typeof videoUrl,
+                    stringified: JSON.stringify(videoUrl)
+                });
                 videoItem.innerHTML = `
                     <div class="error-message">
-                        Invalid video URL: ${String(videoUrl || '')}
+                        Invalid video URL. Debug info:<br>
+                        Type: ${typeof videoUrl}<br>
+                        Value: ${JSON.stringify(videoUrl)}
                     </div>
                 `;
                 return videoItem;
@@ -163,8 +188,10 @@
         // Load and display videos
         async function loadVideos() {
             try {
+                console.log('Loading videos...');
                 const response = await fetch('videos.json');
                 const data = await response.json();
+                console.log('Loaded data:', data);
                 
                 // Update page title and subtitle
                 document.getElementById('pageTitle').textContent = data.title;
@@ -176,11 +203,16 @@
                 videoGrid.innerHTML = '';
                 
                 // Add videos
-                data.videos.forEach(videoUrl => {
+                data.videos.forEach((videoUrl, index) => {
+                    console.log(`Processing video ${index + 1}:`, videoUrl);
                     videoGrid.appendChild(createVideoElement(videoUrl));
                 });
             } catch (error) {
                 console.error('Error loading videos:', error);
+                console.error('Error details:', {
+                    message: error.message,
+                    stack: error.stack
+                });
                 document.getElementById('videoGrid').innerHTML = `
                     <div class="error-message">Error loading videos. Please try again later.</div>
                 `;
