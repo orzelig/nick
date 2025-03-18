@@ -2,29 +2,51 @@
     "title": "Kid-Friendly Videos",
     "subtitle": "A collection of family-friendly videos - built for Rey and Ari Zelig",
     "videos": [
-        {
-            "url": "https://www.youtube.com/watch?v=0-Gyuj2UomI",
-            "title": "Making Perfect Pizza at Home"
-        },
-        {
-            "url": "https://www.youtube.com/watch?v=VLMWq5nfvlk",
-            "title": "Easy Pasta Recipe"
-        },
-        {
-            "url": "https://www.youtube.com/watch?v=e1b8aFeQ6CM",
-            "title": "Simple Cooking Tips"
-        },
-        {
-            "url": "https://www.youtube.com/watch?v=pi6QU4kgRXA",
-            "title": "Healthy Cooking Ideas"
-        },
-        {
-            "url": "https://www.youtube.com/watch?v=nPdl928XmFM",
-            "title": "Fun Breakfast Recipes"
-        },
-        {
-            "url": "https://www.youtube.com/watch?v=zpTOtt9gOE8",
-            "title": "Easy Dessert Making"
-        }
+        "https://www.youtube.com/watch?v=0-Gyuj2UomI",
+        "https://www.youtube.com/watch?v=VLMWq5nfvlk",
+        "https://www.youtube.com/watch?v=e1b8aFeQ6CM",
+        "https://www.youtube.com/watch?v=pi6QU4kgRXA",
+        "https://www.youtube.com/watch?v=nPdl928XmFM",
+        "https://www.youtube.com/watch?v=zpTOtt9gOE8",
+        
+        // Nick DiGiovanni Videos
+        "https://www.youtube.com/watch?v=S3J813WGsUU",
+        "https://www.youtube.com/watch?v=aUrBFBUAGOI",
+        "https://www.youtube.com/watch?v=6J1Uv0xW8Kc",
+        "https://www.youtube.com/watch?v=mXU3riOphcE",
+        "https://www.youtube.com/watch?v=cUkoaXvygMc",
+        "https://www.youtube.com/watch?v=hIc8z8zRWwQ",
+        "https://www.youtube.com/watch?v=9PnKoQhTvzE",
+        "https://www.youtube.com/watch?v=YJfVuGQpVxg",
+        "https://www.youtube.com/watch?v=4lV33TvjUKU",
+        "https://www.youtube.com/watch?v=eL0Q8KQiNAA",
+        "https://www.youtube.com/watch?v=dNJdJIwCF_Y",
+        "https://www.youtube.com/watch?v=D-JvIPyEunM",
+        "https://www.youtube.com/watch?v=U3dPXnhpZiU",
+        "https://www.youtube.com/watch?v=LKJE7GAR2F8",
+        "https://www.youtube.com/watch?v=jYqoXQ7CWzs",
+        
+        // Mark Rober Videos
+        "https://www.youtube.com/watch?v=p9f1DxwVJu8",
+        "https://www.youtube.com/watch?v=Pdt4m13EweA",
+        "https://www.youtube.com/watch?v=GuYbX_xZZ9w",
+        "https://www.youtube.com/watch?v=MFVXwMXp_hc",
+        "https://www.youtube.com/watch?v=hFZFjoX2cGg",
+        "https://www.youtube.com/watch?v=DTvS9lvRxZ8",
+        "https://www.youtube.com/watch?v=MdQyN7MYSN8",
+        "https://www.youtube.com/watch?v=FvIXJBrclLY",
+        "https://www.youtube.com/watch?v=tjCJH79mcVE",
+        "https://www.youtube.com/watch?v=I9Td5uMB_vQ",
+        "https://www.youtube.com/watch?v=8Qr_sKtC5Lw",
+        "https://www.youtube.com/watch?v=XwaH-qT4Rm0",
+        "https://www.youtube.com/watch?v=a_TSR_v07m0",
+        "https://www.youtube.com/watch?v=MvJhLtfG9cA",
+        "https://www.youtube.com/watch?v=a7Hoz9QlbQg",
+        "https://www.youtube.com/watch?v=U21HYnGO7ZM",
+        "https://www.youtube.com/watch?v=06OoaQVJH5s",
+        "https://www.youtube.com/watch?v=psoL4X0marY",
+        "https://www.youtube.com/watch?v=nFu7zS2AxEk",
+        "https://www.youtube.com/watch?v=MY8Nfzcn1qQ",
+        "https://www.youtube.com/watch?v=j2nfdJKX9mE"
     ]
-} 
+}
