@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nick DiGiovanni - Kid-Friendly Videos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            background-color: #f5f5f5;
+            color: #333;
+        }
+
+        header {
+            background-color: #ff0000;
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 1rem 0;
+        }
+
+        .video-item {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .video-item:hover {
+            transform: translateY(-5px);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-title {
+            padding: 1rem;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem;
+            background-color: #333;
+            color: white;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Nick DiGiovanni - Kid-Friendly Videos</h1>
+        <p>A collection of family-friendly cooking videos</p>
+    </header>
+
+    <div class="container">
+        <div class="video-grid">
+            <!-- Video 1 -->
+            <div class="video-item">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/0-Gyuj2UomI" 
+                            title="Nick DiGiovanni Cooking Video" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                </div>
+                <div class="video-title">Making Perfect Pizza at Home</div>
+            </div>
+
+            <!-- Video 2 -->
+            <div class="video-item">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/VLMWq5nfvlk" 
+                            title="Nick DiGiovanni Cooking Video" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                </div>
+                <div class="video-title">Easy Pasta Recipe</div>
+            </div>
+
+            <!-- Video 3 -->
+            <div class="video-item">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/e1b8aFeQ6CM" 
+                            title="Nick DiGiovanni Cooking Video" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                </div>
+                <div class="video-title">Simple Cooking Tips</div>
+            </div>
+
+            <!-- Video 4 -->
+            <div class="video-item">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/pi6QU4kgRXA" 
+                            title="Nick DiGiovanni Cooking Video" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                </div>
+                <div class="video-title">Healthy Cooking Ideas</div>
+            </div>
+
+            <!-- Video 5 -->
+            <div class="video-item">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/nPdl928XmFM" 
+                            title="Nick DiGiovanni Cooking Video" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                </div>
+                <div class="video-title">Fun Breakfast Recipes</div>
+            </div>
+
+            <!-- Video 6 -->
+            <div class="video-item">
+                <div class="video-container">
+                    <iframe src="https://www.youtube.com/embed/zpTOtt9gOE8" 
+                            title="Nick DiGiovanni Cooking Video" 
+                            frameborder="0" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen></iframe>
+                </div>
+                <div class="video-title">Easy Dessert Making</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2024 Nick DiGiovanni Fan Page | All rights reserved</p>
+    </footer>
+</body>
+</html> 
