@@ -2,23 +2,95 @@
     "title": "Kid-Friendly Videos",
     "subtitle": "A collection of family-friendly videos - built for Rey and Ari Zelig",
     "videos": [
-        "https://www.youtube.com/watch?v=eUQZcXrciRA",
-        "https://www.youtube.com/watch?v=F_9PnhbCcUM",
-        "https://www.youtube.com/watch?v=lv6dC0coQeI",
-        "https://www.youtube.com/watch?v=n1jC9BGzKfk",
-        "https://www.youtube.com/watch?v=HaEmIakO7f4",
-        "https://www.youtube.com/watch?v=g1J4181W8ss",
-        "https://www.youtube.com/watch?v=RdzCXBgB-9s",
-        "https://www.youtube.com/watch?v=-uaMjhpi12M",
-        "https://www.youtube.com/watch?v=NVLv52rE4ug",
-        "https://www.youtube.com/watch?v=-BnuqQOSKyM",
-        "https://www.youtube.com/watch?v=zr359AIjU2Q",
-        "https://www.youtube.com/watch?v=ekUbBot8tDA",
-        "https://www.youtube.com/watch?v=S3J813WGsUU",
-        "https://www.youtube.com/watch?v=zhI7bQyTmHw",
-        "https://www.youtube.com/watch?v=0-Gyuj2UomI",
-        "https://www.youtube.com/watch?v=VLMWq5nfvlk",
-        "https://www.youtube.com/watch?v=m8dkjtNessU",
-        "https://www.youtube.com/watch?v=2Vuexl8rCNs"
+        {
+            "url": "https://www.youtube.com/watch?v=eUQZcXrciRA",
+            "title": "Backyard SQUIRREL MAZE 1.0 - Ninja Warrior Course",
+            "channel": "Mark Rober"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=F_9PnhbCcUM",
+            "title": "World's LARGEST NERF GUN!!",
+            "channel": "Mark Rober"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=lv6dC0coQeI",
+            "title": "SKIN A WATERMELON party trick",
+            "channel": "Mark Rober"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=n1jC9BGzKfk",
+            "title": "CARNIVAL SCAM SCIENCE",
+            "channel": "Mark Rober"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=HaEmIakO7f4",
+            "title": "GLITTER BOMB 1.0 vs PORCH PIRATES",
+            "channel": "Mark Rober"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=g1J4181W8ss",
+            "title": "Fun Facts About a Giraffe | Funny Animals | Nat Geo Kids",
+            "channel": "National Geographic Kids"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=RdzCXBgB-9s",
+            "title": "What Is A Black Hole? | Nat Geo Kids",
+            "channel": "National Geographic Kids"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=-uaMjhpi12M",
+            "title": "Why Do We Hiccup? | Nat Geo Kids",
+            "channel": "National Geographic Kids"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=NVLv52rE4ug",
+            "title": "Lions 101 | Nat Geo Kids",
+            "channel": "National Geographic Kids"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=-BnuqQOSKyM",
+            "title": "Amazing Animals | Nat Geo Kids",
+            "channel": "National Geographic Kids"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=zr359AIjU2Q",
+            "title": "The World's Largest Chicken Nugget",
+            "channel": "Nick DiGiovanni"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=ekUbBot8tDA",
+            "title": "Michelin Star Chef Tries Viral TikTok Food Hacks",
+            "channel": "Nick DiGiovanni"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=S3J813WGsUU",
+            "title": "World's Largest Donut",
+            "channel": "Nick DiGiovanni"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=zhI7bQyTmHw",
+            "title": "Making The World's Largest Sushi Roll",
+            "channel": "Nick DiGiovanni"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=0-Gyuj2UomI",
+            "title": "How To Make The Perfect French Fries",
+            "channel": "Nick DiGiovanni"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=VLMWq5nfvlk",
+            "title": "GlitterBomb 2.0 vs. Porch Pirates",
+            "channel": "Mark Rober"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=m8dkjtNessU",
+            "title": "Testing if Sharks Can Smell a Drop of Blood",
+            "channel": "Mark Rober"
+        },
+        {
+            "url": "https://www.youtube.com/watch?v=2Vuexl8rCNs",
+            "title": "Creepy Creatures Halloween Special | Nat Geo Kids",
+            "channel": "National Geographic Kids"
+        }
     ]
 }
