@@ -24,6 +24,7 @@ Add an entry to `videos.json`:
 - `id` is the part after `v=` in the YouTube link.
 - `channel` should be the real channel name. Scratch Garden, Nat Geo Kids, Mark Rober and Nick DiGiovanni get their own filter; any other channel goes under **More fun**.
 - `added` (optional) shows a **NEW** badge for 30 days.
+- `seconds` (optional) is the length; Magnet Words offers videos of 10 minutes or less as rewards.
 
 Check a video's real title and channel before adding it:
 
