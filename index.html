@@ -1,288 +1,282 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
-    <title>Kid-Friendly Videos</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kid-Friendly Videos</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📺</text></svg>">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #fff8ec; --bg-dot: #ffe7c2; --card: #fff; --text: #2b2240; --muted: #6d6380;
+      --chip-border: #eadfcb; --accent: #ff6b6b; --accent-d: #d94f4f;
+      --shadow: 0 6px 0 rgba(43, 34, 64, 0.12);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root { --bg: #1b1730; --bg-dot: #26203f; --card: #2a2445; --text: #f6f2ff; --muted: #b9b0d0; --chip-border: #3b3360; --shadow: 0 6px 0 rgba(0,0,0,.35); }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: "Fredoka", system-ui, sans-serif; color: var(--text);
+      background-color: var(--bg); background-image: radial-gradient(var(--bg-dot) 2px, transparent 2px); background-size: 28px 28px;
+      min-height: 100vh; padding: 0 16px 40px;
+    }
+    button { font: inherit; color: inherit; cursor: pointer; }
+    .home { display: inline-block; margin-top: 14px; color: var(--muted); text-decoration: none; font-weight: 600; }
+    header { text-align: center; padding: 18px 0 10px; }
+    header h1 { font-size: clamp(32px, 7vw, 52px); margin: 0 0 4px; }
+    header p { margin: 0; color: var(--muted); font-size: 18px; }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            line-height: 1.6;
-            background-color: #f5f5f5;
-            color: #333;
-        }
+    .filters { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 18px auto 26px; max-width: 900px; }
+    .chip {
+      font-size: 17px; font-weight: 600; padding: 9px 18px; border-radius: 999px;
+      border: 2px solid var(--chip-border); background: var(--card); box-shadow: var(--shadow);
+    }
+    .chip.is-active { background: var(--text); color: var(--bg); border-color: var(--text); }
 
-        header {
-            background-color: #ff0000;
-            color: white;
-            padding: 2rem;
-            text-align: center;
-        }
+    .grid { max-width: 1200px; margin: 0 auto; display: grid; gap: 22px; grid-template-columns: repeat(auto-fill, minmax(min(100%, 260px), 1fr)); }
+    .card {
+      text-align: left; padding: 0; border: 0; background: var(--card); border-radius: 20px; overflow: hidden;
+      box-shadow: var(--shadow); transition: transform .15s ease;
+    }
+    .card:hover, .card:focus-visible { transform: translateY(-4px); outline: none; }
+    .thumb { position: relative; aspect-ratio: 16/9; background: #000; }
+    .thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+    .thumb .playicon {
+      position: absolute; inset: 0; margin: auto; width: 60px; height: 60px; border-radius: 50%;
+      background: rgba(0,0,0,.55); display: grid; place-items: center; color: #fff; font-size: 26px; padding-left: 4px;
+    }
+    .badge { position: absolute; top: 10px; left: 10px; background: #ffd23f; color: #2b2240; font-weight: 700; font-size: 13px; padding: 3px 10px; border-radius: 999px; }
+    .meta { padding: 12px 14px 14px; }
+    .meta h2 { font-size: 18px; font-weight: 600; margin: 0 0 4px; line-height: 1.25; }
+    .meta span { color: var(--muted); font-size: 14px; }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
+    /* ---------- player ---------- */
+    .player { position: fixed; inset: 0; background: rgba(15, 10, 30, .92); display: none; align-items: center; justify-content: center; padding: 16px; z-index: 10; }
+    .player.open { display: flex; }
+    .stage { width: min(100%, 1100px, calc((100vh - 120px) * 16 / 9)); }
+    .stage:fullscreen { width: 100%; height: 100%; background: #000; display: flex; flex-direction: column; justify-content: center; }
+    .stage:fullscreen .frame { width: min(100%, calc((100vh - 70px) * 16 / 9)); margin: 0 auto; }
+    .frame { position: relative; aspect-ratio: 16/9; background: #000; border-radius: 14px; overflow: hidden; }
+    .frame iframe, #yt { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    /* Clear layer over the video: kids can't tap YouTube's title, logo, cards or suggestions. */
+    .shield { position: absolute; inset: 0; z-index: 2; }
+    .cover, .ended, .oops {
+      position: absolute; inset: 0; z-index: 3; display: none; flex-direction: column; align-items: center; justify-content: center; gap: 14px;
+      color: #fff; text-align: center; padding: 16px;
+    }
+    .cover { background: rgba(10, 6, 24, .72); }
+    .ended, .oops { background: #1b1730; }
+    .show { display: flex; }
+    .bigplay { width: 96px; height: 96px; border-radius: 50%; border: 0; background: var(--accent); color: #fff; font-size: 40px; padding-left: 8px; box-shadow: 0 6px 0 var(--accent-d); }
+    .ended h3, .oops h3 { margin: 0; font-size: clamp(24px, 5vw, 38px); }
+    .endbtns { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    .btn { border: 0; border-radius: 999px; padding: 10px 22px; font-weight: 700; font-size: 18px; background: #fff; color: #2b2240; }
+    .btn.go { background: var(--accent); color: #fff; }
+    .picks { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; max-width: 100%; }
+    .pick { width: min(30%, 200px); border: 0; padding: 0; background: none; color: #fff; text-align: left; }
+    .pick img { width: 100%; aspect-ratio: 16/9; object-fit: cover; border-radius: 10px; display: block; }
+    .pick span { display: block; font-size: 13px; line-height: 1.2; margin-top: 4px; max-height: 2.4em; overflow: hidden; }
 
-        .container {
-            max-width: 1200px;
-            margin: 2rem auto;
-            padding: 0 1rem;
-        }
-
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            padding: 1rem 0;
-        }
-
-        .video-item {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-
-        .video-item:hover {
-            transform: translateY(-5px);
-        }
-
-        .video-container {
-            position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-        }
-
-        .video-container iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        footer {
-            text-align: center;
-            padding: 2rem;
-            background-color: #333;
-            color: white;
-            margin-top: 2rem;
-        }
-
-        @media (max-width: 768px) {
-            .video-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .error-message {
-            color: #721c24;
-            background-color: #f8d7da;
-            border: 1px solid #f5c6cb;
-            padding: 1rem;
-            border-radius: 4px;
-            margin: 1rem 0;
-        }
-
-        #channelFilterContainer {
-            margin-bottom: 1.5rem;
-            text-align: center; /* Centers the dropdown if it's an inline-block or has a set width */
-        }
-
-        #channelFilterContainer label {
-            margin-right: 0.5rem;
-            font-weight: bold;
-        }
-
-        #channelFilter {
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-            font-size: 1rem;
-        }
-
-        /* Optional: Style for when the container is directly under the header, if needed */
-        header + .container > #channelFilterContainer {
-            margin-top: 1rem; /* Add some space if it's directly after the header */
-        }
-    </style>
+    .controls { display: flex; align-items: center; gap: 12px; margin-top: 10px; color: #fff; }
+    .ctl { border: 0; background: rgba(255,255,255,.14); color: #fff; width: 48px; height: 48px; border-radius: 50%; font-size: 20px; flex: none; }
+    .bar { flex: 1; height: 14px; border-radius: 999px; background: rgba(255,255,255,.2); position: relative; cursor: pointer; }
+    .bar i { position: absolute; left: 0; top: 0; bottom: 0; width: 0; border-radius: 999px; background: var(--accent); }
+    .time { font-variant-numeric: tabular-nums; font-size: 15px; min-width: 92px; text-align: right; }
+    .title-now { color: #fff; margin: 0 0 10px; font-size: 20px; font-weight: 600; }
+    @media (max-width: 560px) { .time { display: none; } .pick { width: 46%; } .pick:nth-child(3) { display: none; } }
+  </style>
 </head>
 <body>
-    <header>
-        <h1 id="pageTitle">Loading...</h1>
-        <p id="pageSubtitle"></p>
-    </header>
+  <a class="home" href="https://orzelig.github.io/kids-library/">← 📚 Kids' Library</a>
+  <header>
+    <h1 id="pageTitle">Kid-Friendly Videos</h1>
+    <p id="pageSubtitle"></p>
+  </header>
 
-    <div class="container">
-        <div id="channelFilterContainer">
-            <label for="channelFilter">Filter by channel:</label>
-            <select id="channelFilter" name="channelFilter">
-                <option value="All Channels">All Channels</option>
-                <option value="Mark Rober">Mark Rober</option>
-                <option value="National Geographic Kids">National Geographic Kids</option>
-                <option value="Nick DiGiovanni">Nick DiGiovanni</option>
-            </select>
+  <nav class="filters" id="filters" aria-label="Filter videos"></nav>
+  <main class="grid" id="grid"></main>
+
+  <div class="player" id="player" role="dialog" aria-modal="true" aria-label="Video player">
+    <div class="stage" id="stage">
+      <p class="title-now" id="titleNow"></p>
+      <div class="frame">
+        <div id="yt"></div>
+        <div class="shield" id="shield" aria-hidden="true"></div>
+        <div class="cover" id="cover"><button class="bigplay" id="bigplay" aria-label="Play">▶</button></div>
+        <div class="ended" id="ended">
+          <h3>That's the end! 🎉</h3>
+          <div class="endbtns">
+            <button class="btn go" id="again">↻ Watch again</button>
+            <button class="btn" id="back">Pick another</button>
+          </div>
+          <div class="picks" id="picks"></div>
         </div>
-        <div id="videoGrid" class="video-grid">
-            <div class="loading">Loading videos...</div>
+        <div class="oops" id="oops">
+          <h3>This video can't play here 😕</h3>
+          <button class="btn go" id="oopsBack">Pick another</button>
         </div>
+      </div>
+      <div class="controls">
+        <button class="ctl" id="pp" aria-label="Pause">❚❚</button>
+        <div class="bar" id="bar" role="slider" aria-label="Video position"><i id="fill"></i></div>
+        <span class="time" id="time">0:00 / 0:00</span>
+        <button class="ctl" id="fs" aria-label="Full screen">⛶</button>
+        <button class="ctl" id="close" aria-label="Close">✕</button>
+      </div>
     </div>
+  </div>
 
-    <footer>
-        <p>© 2024 Kid-Friendly Videos | All rights reserved</p>
-    </footer>
+  <script>
+  (function () {
+    var MAIN = ["Scratch Garden", "Nat Geo Kids", "Mark Rober", "Nick DiGiovanni"];
+    var NEW_DAYS = 30;
+    var $ = function (id) { return document.getElementById(id); };
+    var videos = [], filter = "all", current = null;
 
-    <script>
-        let allVideos = []; // Declare global variable
+    function groupOf(v) { return MAIN.indexOf(v.channel) >= 0 ? v.channel : "More"; }
+    function isNew(v) { return v.added && (Date.now() - new Date(v.added)) / 864e5 <= NEW_DAYS; }
+    function thumb(id) { return "https://i.ytimg.com/vi/" + id + "/hqdefault.jpg"; }
+    function el(tag, cls, text) { var n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
 
-        // Function to extract video ID from YouTube URL
-        function getYouTubeVideoId(url) {
-            console.log('Processing URL:', url);
-            console.log('URL type:', typeof url);
-            
-            try {
-                // Ensure url is a string
-                const urlStr = String(url || '');
-                console.log('URL as string:', urlStr);
-                
-                // Handle youtu.be URLs
-                if (urlStr.includes('youtu.be/')) {
-                    const id = urlStr.split('youtu.be/')[1].split('?')[0];
-                    console.log('Extracted ID (youtu.be):', id);
-                    return id;
-                }
-                // Handle youtube.com URLs
-                if (urlStr.includes('youtube.com/watch')) {
-                    const params = urlStr.split('?')[1];
-                    console.log('URL params:', params);
-                    const urlParams = new URLSearchParams(params);
-                    const id = urlParams.get('v');
-                    console.log('Extracted ID (youtube.com):', id);
-                    return id;
-                }
-                console.log('No video ID found in URL');
-                return null;
-            } catch (error) {
-                console.error('Error parsing URL:', error);
-                console.error('Error details:', {
-                    message: error.message,
-                    stack: error.stack
-                });
-                return null;
-            }
-        }
+    // ---------- list ----------
+    function renderFilters() {
+      var opts = [["all", "✨ All"]];
+      if (videos.some(isNew)) opts.push(["new", "⭐ New"]);
+      MAIN.forEach(function (c) { if (videos.some(function (v) { return v.channel === c; })) opts.push([c, c]); });
+      if (videos.some(function (v) { return groupOf(v) === "More"; })) opts.push(["More", "More fun"]);
+      var nav = $("filters"); nav.innerHTML = "";
+      opts.forEach(function (o) {
+        var b = el("button", "chip" + (o[0] === filter ? " is-active" : ""), o[1]);
+        b.setAttribute("aria-pressed", o[0] === filter);
+        b.onclick = function () { filter = o[0]; try { localStorage.setItem("kv-filter", filter); } catch (e) {} renderFilters(); renderGrid(); };
+        nav.appendChild(b);
+      });
+    }
+    function visible() {
+      return videos.filter(function (v) {
+        return filter === "all" || (filter === "new" ? isNew(v) : groupOf(v) === filter);
+      });
+    }
+    function card(v) {
+      var b = el("button", "card"); b.type = "button";
+      var t = el("div", "thumb");
+      var img = el("img"); img.src = thumb(v.id); img.alt = ""; img.loading = "lazy"; t.appendChild(img);
+      t.appendChild(el("span", "playicon", "▶"));
+      if (isNew(v)) t.appendChild(el("span", "badge", "NEW"));
+      var m = el("div", "meta"); m.appendChild(el("h2", null, v.title)); m.appendChild(el("span", null, v.channel));
+      b.appendChild(t); b.appendChild(m);
+      b.onclick = function () { open(v); };
+      return b;
+    }
+    function renderGrid() {
+      var g = $("grid"); g.innerHTML = "";
+      visible().forEach(function (v) { g.appendChild(card(v)); });
+    }
 
-        // Function to create video element
-        function createVideoElement(videoData) {
-            console.log('Creating video element for:', videoData);
-            const videoUrl = videoData.url; // Modified line
-            const videoTitle = videoData.title; // Modified line
-            
-            console.log('Extracted URL:', videoUrl);
-            console.log('Extracted title:', videoTitle);
-            
-            const videoId = getYouTubeVideoId(videoUrl);
-            console.log('Got video ID:', videoId);
-            
-            const videoItem = document.createElement('div');
-            videoItem.className = 'video-item';
-            
-            if (!videoId) {
-                console.error('Invalid video URL object:', {
-                    videoData,
-                    type: typeof videoData,
-                    stringified: JSON.stringify(videoData)
-                });
-                videoItem.innerHTML = `
-                    <div class="error-message">
-                        Invalid video URL. Debug info:<br>
-                        Type: ${typeof videoData}<br>
-                        Value: ${JSON.stringify(videoData)}
-                    </div>
-                `;
-                return videoItem;
-            }
+    // ---------- locked player ----------
+    var yt = null, ytReady = false, pending = null, tick = null;
+    window.onYouTubeIframeAPIReady = function () { ytReady = true; if (pending) { var v = pending; pending = null; load(v); } };
+    function loadApi() {
+      if (document.getElementById("yt-api")) return;
+      var s = document.createElement("script"); s.id = "yt-api"; s.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(s);
+    }
+    function showOnly(id) { ["cover", "ended", "oops"].forEach(function (k) { $(k).classList.toggle("show", k === id); }); }
 
-            videoItem.innerHTML = `
-                <div class="video-container">
-                    <iframe src="https://www.youtube-nocookie.com/embed/${videoId}"
-                            title="${videoTitle}"
-                            frameborder="0"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen></iframe>
-                </div>
-                ${videoTitle ? `<div class="video-title" style="padding: 1rem; text-align: center;">${videoTitle}</div>` : ''}
-            `;
-            return videoItem;
-        }
+    function open(v) {
+      current = v;
+      $("titleNow").textContent = v.title;
+      $("player").classList.add("open");
+      document.body.style.overflow = "hidden";
+      showOnly("cover");
+      setProgress(0, 0);
+      if (ytReady) load(v); else { pending = v; loadApi(); }
+    }
+    function load(v) {
+      if (yt) { yt.loadVideoById(v.id); return; }
+      yt = new YT.Player("yt", {
+        host: "https://www.youtube-nocookie.com",
+        videoId: v.id,
+        playerVars: { autoplay: 1, controls: 0, rel: 0, modestbranding: 1, playsinline: 1, disablekb: 1, fs: 0, iv_load_policy: 3, cc_load_policy: 0 },
+        events: { onStateChange: onState, onError: function () { stopTick(); showOnly("oops"); } }
+      });
+    }
+    function onState(e) {
+      var S = YT.PlayerState;
+      if (e.data === S.PLAYING) { showOnly(null); $("pp").textContent = "❚❚"; $("pp").setAttribute("aria-label", "Pause"); startTick(); }
+      else if (e.data === S.PAUSED || e.data === S.CUED) { showOnly("cover"); $("pp").textContent = "▶"; $("pp").setAttribute("aria-label", "Play"); stopTick(); }
+      else if (e.data === S.ENDED) { stopTick(); showEnd(); }
+    }
+    function showEnd() {
+      $("pp").textContent = "▶";
+      var picks = $("picks"); picks.innerHTML = "";
+      var same = videos.filter(function (v) { return v !== current && groupOf(v) === groupOf(current); });
+      var rest = videos.filter(function (v) { return v !== current && groupOf(v) !== groupOf(current); });
+      shuffle(same).concat(shuffle(rest)).slice(0, 3).forEach(function (v) {
+        var b = el("button", "pick"); b.type = "button";
+        var img = el("img"); img.src = thumb(v.id); img.alt = ""; b.appendChild(img);
+        b.appendChild(el("span", null, v.title));
+        b.onclick = function () { open(v); };
+        picks.appendChild(b);
+      });
+      showOnly("ended");
+    }
+    function shuffle(a) { a = a.slice(); for (var i = a.length - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = a[i]; a[i] = a[j]; a[j] = t; } return a; }
+    function toggle() {
+      if (!yt || !yt.getPlayerState) return;
+      var st = yt.getPlayerState();
+      if (st === YT.PlayerState.PLAYING) yt.pauseVideo(); else yt.playVideo();
+    }
+    function fmt(s) { s = Math.max(0, Math.floor(s || 0)); return Math.floor(s / 60) + ":" + ("0" + (s % 60)).slice(-2); }
+    function setProgress(t, d) { $("fill").style.width = d ? (t / d * 100) + "%" : "0"; $("time").textContent = fmt(t) + " / " + fmt(d); }
+    function startTick() { stopTick(); tick = setInterval(function () { if (yt && yt.getCurrentTime) setProgress(yt.getCurrentTime(), yt.getDuration()); }, 250); }
+    function stopTick() { clearInterval(tick); tick = null; }
+    function close() {
+      if (yt && yt.stopVideo) yt.stopVideo();
+      stopTick();
+      if (document.fullscreenElement) document.exitFullscreen().catch(function () {});
+      $("player").classList.remove("open");
+      document.body.style.overflow = "";
+    }
 
-        // Load and display videos
-        async function loadVideos() {
-            try {
-                console.log('Loading videos...');
-                const response = await fetch('videos.json');
-                const data = await response.json();
-                console.log('Loaded data:', data);
+    $("shield").onclick = toggle;
+    $("bigplay").onclick = function () { if (yt && yt.playVideo) yt.playVideo(); };
+    $("pp").onclick = function () { if ($("ended").classList.contains("show")) { yt.seekTo(0); yt.playVideo(); } else toggle(); };
+    $("again").onclick = function () { yt.seekTo(0); yt.playVideo(); };
+    $("back").onclick = close; $("oopsBack").onclick = close; $("close").onclick = close;
+    $("bar").onclick = function (e) {
+      if (!yt || !yt.getDuration) return;
+      var r = this.getBoundingClientRect(), d = yt.getDuration();
+      yt.seekTo(Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)) * d, true);
+    };
+    var stage = $("stage");
+    if (!stage.requestFullscreen) $("fs").style.display = "none";
+    $("fs").onclick = function () {
+      if (document.fullscreenElement) document.exitFullscreen(); else stage.requestFullscreen().catch(function () {});
+    };
+    document.addEventListener("keydown", function (e) {
+      if (!$("player").classList.contains("open")) return;
+      if (e.key === "Escape" && !document.fullscreenElement) close();
+      if (e.key === " ") { e.preventDefault(); toggle(); }
+    });
 
-                allVideos = data.videos; // Store videos globally
-                
-                // Update page title and subtitle
-                document.getElementById('pageTitle').textContent = data.title;
-                document.getElementById('pageSubtitle').textContent = data.subtitle;
-                document.title = data.title;
-                
-                // Display all videos initially
-                displayVideos("All Channels");
-            } catch (error) {
-                console.error('Error loading videos:', error);
-                console.error('Error details:', {
-                    message: error.message,
-                    stack: error.stack
-                });
-                document.getElementById('videoGrid').innerHTML = `
-                    <div class="error-message">Error loading videos. Please try again later.</div>
-                `;
-            }
-        }
-
-        // Function to display videos based on selected channel
-        function displayVideos(selectedChannel) {
-            console.log(`Displaying videos for channel: ${selectedChannel}`);
-            const videoGrid = document.getElementById('videoGrid');
-            videoGrid.innerHTML = ''; // Clear existing videos
-
-            const filteredVideos = allVideos.filter(video => {
-                if (selectedChannel === "All Channels") {
-                    return true;
-                }
-                return video.channel === selectedChannel;
-            });
-
-            console.log('Filtered videos:', filteredVideos);
-            filteredVideos.forEach(videoData => {
-                videoGrid.appendChild(createVideoElement(videoData));
-            });
-        }
-
-        // Load videos when page loads
-        document.addEventListener('DOMContentLoaded', async () => {
-            await loadVideos(); // Ensure videos are loaded and allVideos is populated
-
-            // Add event listener for the channel filter
-            document.getElementById('channelFilter').addEventListener('change', function(event) {
-                displayVideos(event.target.value);
-            });
-        });
-    </script>
+    // ---------- load ----------
+    fetch("videos.json").then(function (r) { return r.json(); }).then(function (data) {
+      videos = data.videos || [];
+      $("pageTitle").textContent = data.title || "Kid-Friendly Videos";
+      $("pageSubtitle").textContent = data.subtitle || "";
+      try { filter = localStorage.getItem("kv-filter") || "all"; } catch (e) {}
+      var known = filter === "all" || filter === "More" || MAIN.indexOf(filter) >= 0 || (filter === "new" && videos.some(isNew));
+      if (!known) filter = "all";
+      renderFilters(); renderGrid();
+      loadApi(); // warm up the player so the first tap starts quickly
+    }).catch(function () {
+      $("grid").textContent = "Couldn't load the videos. Please refresh the page.";
+    });
+  })();
+  </script>
 </body>
-</html> 
+</html>

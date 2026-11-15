@@ -1,54 +1,34 @@
-# Nick DiGiovanni - Kid-Friendly Videos
+# Kid-Friendly Videos
 
-A static webpage showcasing kid-friendly cooking videos from Nick DiGiovanni's YouTube channel.
+A hand-picked video page for the kids: Scratch Garden songs, Nat Geo Kids, Mark Rober science, Nick DiGiovanni cooking and a few other learning channels.
 
-## Features
+Live: https://orzelig.github.io/nick/ · Part of the [Kids' Library](https://orzelig.github.io/kids-library/)
 
-- Responsive grid layout
-- Mobile-friendly design
-- Kid-friendly video selection
-- Easy to maintain and update
+## Locked player
 
-## Setup
+Videos play inside the page, not on YouTube:
 
-1. Fork this repository
-2. Clone your forked repository
-3. Edit the `index.html` file to add or modify videos
-4. Commit and push your changes
+- YouTube's own controls are hidden and a clear layer covers the video, so the title, logo, end cards and suggestions can't be tapped.
+- Pausing shows the page's own cover, hiding YouTube's "More videos" strip.
+- When a video ends, the page shows its own "That's the end!" screen with **Watch again** and picks from this list only.
+- Videos load from `youtube-nocookie.com`.
 
-## Adding Videos
+## Adding a video
 
-To add a new video:
+Add an entry to `videos.json`:
 
-1. Find the video ID from the YouTube URL (e.g., for `https://www.youtube.com/watch?v=abc123xyz`, the ID is `abc123xyz`)
-2. Add a new video item in the `video-grid` section of `index.html`:
-
-```html
-<div class="video-item">
-    <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/VIDEO_ID" 
-                title="Nick DiGiovanni Cooking Video" 
-                frameborder="0" 
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
-                allowfullscreen></iframe>
-    </div>
-    <div class="video-title">Video Title</div>
-</div>
+```json
+{ "id": "dQw4w9WgXcQ", "title": "Video title", "channel": "Scratch Garden", "added": "2026-11-15" }
 ```
 
-## Deploying to GitHub Pages
+- `id` is the part after `v=` in the YouTube link.
+- `channel` should be the real channel name. Scratch Garden, Nat Geo Kids, Mark Rober and Nick DiGiovanni get their own filter; any other channel goes under **More fun**.
+- `added` (optional) shows a **NEW** badge for 30 days.
 
-1. Go to your repository's Settings
-2. Scroll down to the "GitHub Pages" section
-3. Under "Source", select the branch you want to deploy (usually `main` or `master`)
-4. Click "Save"
+Check a video's real title and channel before adding it:
 
-Your site will be available at `https://[your-username].github.io/[repository-name]`
+```bash
+curl -s "https://www.youtube.com/oembed?format=json&url=https://www.youtube.com/watch?v=VIDEO_ID"
+```
 
-## Contributing
-
-Feel free to submit issues and enhancement requests!
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details. 
+New uploads for a channel are in its feed, e.g. Scratch Garden: https://www.youtube.com/feeds/videos.xml?channel_id=UC8NFs-VWUsyuq4zaYVVMgCQ
