@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The videos page has moved</title>
+<script>
+// The videos page moved from /nick/ to /kids-library/videos/. Keep the rest of the address (page, ?query, #hash).
+(function () {
+  var oldBase = "/nick/", newBase = "/kids-library/videos/", keepPath = true;
+  var p = location.pathname, rest = "";
+  if (keepPath && p.indexOf(oldBase) === 0) rest = p.slice(oldBase.length).replace(/^index\.html$/, "");
+  location.replace(newBase + rest + location.search + location.hash);
+})();
+</script>
+<meta http-equiv="refresh" content="0; url=https://orzelig.github.io/kids-library/videos/">
+<link rel="canonical" href="https://orzelig.github.io/kids-library/videos/">
+<style>body{font-family:system-ui,sans-serif;text-align:center;padding:60px 16px;color:#2b2240;background:#fff8ec}a{color:#7c5cff}</style>
+</head>
+<body>
+<p>The videos page has moved to <a href="https://orzelig.github.io/kids-library/videos/">https://orzelig.github.io/kids-library/videos/</a>.</p>
+</body>
+</html>
