@@ -1,6 +1,6 @@
 {
-  "title": "Kid-Friendly Videos",
-  "subtitle": "A collection of family-friendly videos - built for Rey and Ari Zelig",
+  "title": "Fun Videos",
+  "subtitle": "Hand-picked videos for Ari and Rey",
   "videos": [
     {
       "id": "2E6-G7PegV8",
@@ -49,7 +49,7 @@
       "title": "4s Multiplication Song",
       "channel": "Scratch Garden",
       "added": "2026-11-15",
-      "seconds": 0
+      "seconds": 145
     },
     {
       "id": "2ay0usM-rbA",
@@ -177,13 +177,15 @@
       "id": "ekUbBot8tDA",
       "title": "5 Easy At Home Science Experiments w/ Mark Rober",
       "channel": "CrunchLabs",
-      "seconds": 735
+      "seconds": 735,
+      "show": "Mark Rober"
     },
     {
       "id": "S3J813WGsUU",
       "title": "Cooking A Toddler A Gourmet Meal",
       "channel": "Chef Nick",
-      "seconds": 477
+      "seconds": 477,
+      "show": "Nick DiGiovanni"
     },
     {
       "id": "zhI7bQyTmHw",
